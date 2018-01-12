@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>BackStage</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="/static/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <script  src="/static/js/jquery-2.0.3.min.js" type="text/javascript" ></script>  
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+<link rel="stylesheet" href="/static/css/backstage.css">     
+ <script  src="/static/js/backstage.js" type="text/javascript" ></script>  
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/index"><span class="glyphicon glyphicon-home"></span>&nbsp;Rubb1sh Protection</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" id="fm">
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>&nbsp;Account</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>        
+            </li>
+           <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span>&nbsp;Setting</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>        
+            </li>           
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-comment"></span>&nbsp;Message</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>        
+            </li>              
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Help</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>        
+            </li>>
+          </ul>        
+          <form class="navbar-form navbar-right">          
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-md-2 sidebar">
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>
+          <button type="button" class="btn btn-large btn-block btn-primary" id="Mainchange"><span class="glyphicon glyphicon-tower"></span>&nbsp;Main Control</button>
+          </p>  
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <p>
+          <button type="button" class="btn btn-large btn-block btn-success" id="Warmchange"><span class="fa fa-fire fa-1x"></span>&nbsp;Warm</button>
+          </p>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <p>
+          <button type="button" class="btn btn-large btn-block btn-info" id="Airchange"><span class="fa fa-tree fa-1x"></span>&nbsp;Air Cleaner</button>
+          </p>  
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+  
+          <p>
+          <button type="button" class="btn btn-large btn-block btn-warning" id="Lightchange"><span class="glyphicon glyphicon-lamp"></span>&nbsp;Light</button>
+          </p>
+          <br>
+          <br>
+          <br>
+          <br>
+          
+
+        </div>
+<div id="MainControl">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Data Values&nbsp;<button type="button" class="btn" id="refresh"><span class="fa fa-repeat fa-1x"></span></button></h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva1">
+            <canvas  id="myCanva1">
+					Your browser does not support the canvas element.
+				</canvas>
+            </div>
+              <i class="fa fa-thermometer-half fa-3x"></i>
+              <h4>Temperature&nbsp;&nbsp;&#176;C</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva2">
+            <canvas class="canva2" id="myCanva2">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-tint fa-3x"></i>
+              <h4>Tumidity&nbsp;&nbsp;%RH</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva3">
+            <canvas class="canva3" id="myCanva3">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-lightbulb-o fa-3x"></i>
+              <h4>Brightness&nbsp;&nbsp;cd/m^2</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva4">
+            <canvas class="canva4" id="myCanva4">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-cloud fa-3x"></i>
+              <h4>PM2.5&nbsp;&nbsp;&#956;g/m^3</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Quick Switchers</h2>
+
+
+<div class="row placeholders">
+<div class="col-xs-3 col-sm-3 placeholder">
+<button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-bath fa-1x"></i>&nbsp;Bath</button>
+</div>
+<div class="col-xs-5 col-sm-5 placeholder">
+<button type="button" class="btn btn-success btn-circle btn-xl"><i class="fa fa-music fa-1x"></i>&nbsp;Music</button>
+</div>
+<div class="col-xs-3 col-sm-3 placeholder">
+<button type="button" class="btn btn-inverse btn-circle btn-xl"><i class="fa fa-bed fa-1x"></i>&nbsp;Sleep</button>
+</div>
+</div>
+<h3 class="sub-header">Data Notes<button type="button" class="btn" id="Notes"><span class="fa fa-save fa-1x"></span></button><button type="button" class="btn" id="Clean"><span class="fa fa-trash fa-1x"></span></button></h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Time Point</th>
+                  <th>Data Type</th>
+                  <th>Value</th>
+                  <th>Unit</th>
+                  <th>Mode</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="datanote1-1"></td>
+                  <td id="datanote1-2"></td>
+                  <td id="datanote1-3"></td>
+                  <td id="datanote1-4"></td>
+                  <td id="datanote1-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote2-1"></td>
+                  <td id="datanote2-2"></td>
+                  <td id="datanote2-3"></td>
+                  <td id="datanote2-4"></td>
+                  <td id="datanote2-5"></td>
+                </tr>
+                  <tr>
+                  <td id="datanote3-1"></td>
+                  <td id="datanote3-2"></td>
+                  <td id="datanote3-3"></td>
+                  <td id="datanote3-4"></td>
+                  <td id="datanote3-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote4-1"></td>
+                  <td id="datanote4-2"></td>
+                  <td id="datanote4-3"></td>
+                  <td id="datanote4-4"></td>
+                  <td id="datanote4-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote5-1"></td>
+                  <td id="datanote5-2"></td>
+                  <td id="datanote5-3"></td>
+                  <td id="datanote5-4"></td>
+                  <td id="datanote5-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote6-1"></td>
+                  <td id="datanote6-2"></td>
+                  <td id="datanote6-3"></td>
+                  <td id="datanote6-4"></td>
+                  <td id="datanote6-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote7-1"></td>
+                  <td id="datanote7-2"></td>
+                  <td id="datanote7-3"></td>
+                  <td id="datanote7-4"></td>
+                  <td id="datanote7-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote8-1"></td>
+                  <td id="datanote8-2"></td>
+                  <td id="datanote8-3"></td>
+                  <td id="datanote8-4"></td>
+                  <td id="datanote8-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote9-1"></td>
+                  <td id="datanote9-2"></td>
+                  <td id="datanote9-3"></td>
+                  <td id="datanote9-4"></td>
+                  <td id="datanote9-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote10-1"></td>
+                  <td id="datanote10-2"></td>
+                  <td id="datanote10-3"></td>
+                  <td id="datanote10-4"></td>
+                  <td id="datanote10-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote11-1"></td>
+                  <td id="datanote11-2"></td>
+                  <td id="datanote11-3"></td>
+                  <td id="datanote11-4"></td>
+                  <td id="datanote11-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote12-1"></td>
+                  <td id="datanote12-2"></td>
+                  <td id="datanote12-3"></td>
+                  <td id="datanote12-4"></td>
+                  <td id="datanote12-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote13-1"></td>
+                  <td id="datanote13-2"></td>
+                  <td id="datanote13-3"></td>
+                  <td id="datanote13-4"></td>
+                  <td id="datanote13-5"></td>
+                </tr>
+                 <tr>
+                  <td id="datanote14-1"></td>
+                  <td id="datanote14-2"></td>
+                  <td id="datanote14-3"></td>
+                  <td id="datanote14-4"></td>
+                  <td id="datanote14-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote15-1"></td>
+                  <td id="datanote15-2"></td>
+                  <td id="datanote15-3"></td>
+                  <td id="datanote15-4"></td>
+                  <td id="datanote15-5"></td>
+                </tr>
+                <tr>
+                  <td id="datanote16-1"></td>
+                  <td id="datanote16-2"></td>
+                  <td id="datanote16-3"></td>
+                  <td id="datanote16-4"></td>
+                  <td id="datanote16-5"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div id="Warm">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Temperature Values&nbsp;<button type="button" class="btn" id="refresh"><span class="fa fa-repeat fa-1x"></span></button></h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-4 placeholder">
+            <div class="canva1">
+            <canvas  id="WarmCanva1">
+					Your browser does not support the canvas element.
+				</canvas>
+            </div>
+              <i class="fa fa-thermometer-half fa-3x"></i>
+              <h4>Temperature&nbsp;&nbsp;&#176;C</h4>
+              <span class="text-muted">Balneary Temperature</span>
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder">
+            <div class="canva2">
+            <canvas  id="WarmCanva2">
+					Your browser does not support the canvas element.
+				</canvas>
+            </div>
+              <i class="fa fa-thermometer-half fa-3x"></i>
+              <h4>Temperature&nbsp;&nbsp;&#176;C</h4>
+              <span class="text-muted">Parlour Temperature</span>
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder">
+            <div class="canva3">
+            <canvas  id="WarmCanva3">
+					Your browser does not support the canvas element.
+				</canvas>
+            </div>
+              <i class="fa fa-thermometer-half fa-3x"></i>
+              <h4>Temperature&nbsp;&nbsp;&#176;C</h4>
+              <span class="text-muted">Roost Temperature</span>
+            </div>
+
+          </div>
+
+          <h2 class="sub-header">Quick Switchers</h2>
+
+
+<div class="row placeholders">
+<div class="col-xs-3 col-sm-3 placeholder">
+<button type="button" class="btn btn-inverse btn-circle btn-xl" id="Balheat" ><i class="fa fa-bath fa-1x"></i>&nbsp;Balneary</button>
+</div>
+<div class="col-xs-5 col-sm-5 placeholder">
+<button type="button" class="btn btn-inverse btn-circle btn-xl" id="Parheat" ><i class="fa fa-home fa-1x"></i>&nbsp;Parlour</button>
+</div>
+<div class="col-xs-3 col-sm-3 placeholder">
+<button type="button" class="btn btn-inverse btn-circle btn-xl" id="Rooheat" ><i class="fa fa-bed fa-1x"></i>&nbsp;Roost</button>
+</div>
+</div>
+      </div>
+      </div>
+      
+      <div id="Aircleaner">
+              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Particulate Matter&nbsp;<button type="button" class="btn" id="refresh"><span class="fa fa-repeat fa-1x"></span></button></h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva1">
+            <canvas  id="airCanva1">
+					Your browser does not support the canvas element.
+				</canvas>
+            </div>
+              <i class="fa fa-cloud fa-3x"></i>
+              <h4>1.0um in diameter with 0.1L air&nbsp;&nbsp;/particle</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva2">
+            <canvas class="canva2" id="airCanva2">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-cloud fa-3x"></i>
+              <h4>2.5um in diameter with 0.1L air&nbsp;&nbsp;/particle</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva3">
+            <canvas class="canva3" id="airCanva3">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-cloud fa-3x"></i>
+              <h4>5um in diameter with 0.1L air&nbsp;&nbsp;/particle</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+            <div class="canva4">
+            <canvas class="canva4" id="airCanva4">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <i class="fa fa-cloud fa-3x"></i>
+              <h4>10um in diameter with 0.1L air&nbsp;&nbsp;/particle</h4>
+              <span class="text-muted">sensor opearates properly</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Quick Switchers</h2>
+
+
+<div class="row placeholders">
+<div class="col-xs-3 col-sm-11 placeholder">
+<button type="button" class="btn btn-inverse btn-circle btn-xl" id="Cleaner"><i class="fa fa-filter fa-1x"></i>&nbsp;Cleaner</button>
+</div>
+
+</div>
+
+        </div>
+
+        </div>
+        <div id="Light">
+        
+        </div>
+      </div>
+
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/static/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

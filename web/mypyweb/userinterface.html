@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+    <head>
+        <meta charset="utf-8">
+        <title>User Interface</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- CSS -->
+        <link rel="stylesheet" href="/static/css/reset.css">
+        <link rel="stylesheet" href="/static/css/supersized.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <!-- Javascript -->
+        <script type="text/javascript" src="/static/js/jquery-2.0.3.min.js" ></script>
+        <script type="text/javascript" src="/static/js/jquery.cookie.js"  ></script>
+    </head>
+<script type="text/javascript" src="/static/js/userinterface.js"  ></script>
+     
+    <link rel="stylesheet" href="/static/css/userinterface.css">     
+    <body>
+         <div class="masthead clearfix">
+            <div class="inner">
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li><a href="/index">Home</a></li>
+                  <li class="active"><a href="/userinterface">UserInterface</a></li>
+                  <li><a href="/aboutus">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        <div class="page-container">
+            <h1>Login</h1>
+            <form action="" method="post">
+                <input type="text" name="username" class="username" placeholder="Username" onkeyup="value=clean1(value)" onblur="limit1none()">
+                <div class="lim1"><span id="limit1" style="display:none">"Chinese,limited symbols,space are not allowed."</span></div>
+                <input type="password" name="password" class="password" placeholder="Password" onkeyup="value=clean2(value)" onblur="limit2none()">
+                <div class="lim2"><span id="limit2" style="display:none">"Chinese,limited symbols,space are not allowed."</span></div>
+                <div class="checkcode">
+				<input type="text" id="J_codetext" placeholder="Type Here" maxlength="4" name="captcha">
+				<canvas class="J_codeimg" id="myCanvas">
+					Your browser does not support the canvas element.
+				</canvas>
+                </div>
+                <button id="signin" >Sign me in</button>               
+            </form>
+        </div>     
+    <div class="h2"> <h2>Cookie Verification Button</h2></div>
+    <div class="CookieCheck">  
+      <input type="checkbox" value="None" id="CookieCheck" name="check" checked />
+      <label for="CookieCheck"></label>
+    </div>
+    </body>
+
+</html>
+
