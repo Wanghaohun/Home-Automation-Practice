@@ -1,0 +1,7 @@
+"STARTUP.obj",
+"zhenghe.obj",
+".\I2C.obj",
+"SPI.obj",
+"DA-AD.obj" 
+TO "bszhenghe" 
+RAMSIZE(256) 

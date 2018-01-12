@@ -1,0 +1,279 @@
+C51 COMPILER V7.50   51_DHT21                                                              09/27/2017 16:54:09 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE 51_DHT21
+OBJECT MODULE PLACED IN 51_DHT21.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE 51_DHT21.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          //****************************************************************//
+   2          //         DHT21使用范例 
+   3          //单片机 AT89S52 或 STC89C52RC 
+   4          //功能   串口发送温湿度数据 晶振 11.0592M 波特率 9600 
+   5          //硬件   P2.0口为通讯口连接DHT11,DHT11的电源和地连接单片机的电源和地，单片机串口加MAX232连接电脑 
+   6          //公司  雁凌电子    
+   7          //****************************************************************//
+   8          
+   9          #include <reg52.h>
+  10          #include <intrins.h> 
+  11          //
+  12          typedef unsigned char  U8;       /* defined for unsigned 8-bits integer variable          无符号8位整型变量  */
+  13          typedef signed   char  S8;       /* defined for signed 8-bits integer variable            有符号8位整型变量  */
+  14          typedef unsigned int   U16;      /* defined for unsigned 16-bits integer variable         无符号16位整型变量 */
+  15          typedef signed   int   S16;      /* defined for signed 16-bits integer variable           有符号16位整型变量 */
+  16          typedef unsigned long  U32;      /* defined for unsigned 32-bits integer variable         无符号32位整型变量 */
+  17          typedef signed   long  S32;      /* defined for signed 32-bits integer variable           有符号32位整型变量 */
+  18          typedef float          F32;      /* single precision floating point variable (32bits) 单精度浮点数（32位长
+             -度） */
+  19          typedef double         F64;      /* double precision floating point variable (64bits) 双精度浮点数（64位长
+             -度） */
+  20          //
+  21          #define uchar unsigned char
+  22          #define uint unsigned int
+  23          #define   Data_0_time    4
+  24          
+  25          //----------------------------------------------//
+  26          //----------------IO口定义区--------------------//
+  27          //----------------------------------------------//
+  28          sbit  P2_5  = P2^5 ;
+  29          
+  30          //----------------------------------------------//
+  31          //----------------定义区--------------------//
+  32          //----------------------------------------------//
+  33          /*U8  U8FLAG,k;
+  34          U8  U8count,U8temp;
+  35          U8  U8T_data_H,U8T_data_L,U8RH_data_H,U8RH_data_L,U8checkdata;
+  36          U8  U8T_data_H_temp,U8T_data_L_temp,U8RH_data_H_temp,U8RH_data_L_temp,U8checkdata_temp;
+  37          U8  U8comdata;
+  38          U8  outdata[5];  //定义发送的字节数        
+  39          U8  indata[5];
+  40          U8  count, count_r=0;
+  41          U8  str[5]={"RS232"};
+  42          U16 U16temp1,U16temp2;*/
+  43          SendData(U8 *a)
+  44          {
+  45   1              outdata[0] = a[0]; 
+*** ERROR C202 IN LINE 45 OF 51_DHT21.C: 'outdata': undefined identifier
+  46   1              outdata[1] = a[1];
+*** ERROR C202 IN LINE 46 OF 51_DHT21.C: 'outdata': undefined identifier
+  47   1              outdata[2] = a[2];
+*** ERROR C202 IN LINE 47 OF 51_DHT21.C: 'outdata': undefined identifier
+  48   1              outdata[3] = a[3];
+*** ERROR C202 IN LINE 48 OF 51_DHT21.C: 'outdata': undefined identifier
+  49   1              outdata[4] = a[4];
+C51 COMPILER V7.50   51_DHT21                                                              09/27/2017 16:54:09 PAGE 2   
+
+*** ERROR C202 IN LINE 49 OF 51_DHT21.C: 'outdata': undefined identifier
+  50   1              count = 1;
+*** ERROR C202 IN LINE 50 OF 51_DHT21.C: 'count': undefined identifier
+  51   1              SBUF=outdata[0];
+*** ERROR C202 IN LINE 51 OF 51_DHT21.C: 'outdata': undefined identifier
+  52   1      }
+  53          
+  54                 void Delay180ms()
+  55              {      U8 i;
+  56   1                              U16 j=190;
+  57   1                  for(;j>0;j--)
+  58   1                {     
+  59   2                      for(i=0;i<27;i++);
+  60   2      
+  61   2                }
+  62   1          }
+  63                 void  Delay_10us(void)
+  64                {
+  65   1              U8 i;
+  66   1              i--;
+  67   1              i--;
+  68   1              i--;
+  69   1              i--;
+  70   1              i--;
+  71   1              i--;
+  72   1             }
+  73                  
+  74                  void  COM(void)
+  75                {
+  76   1           
+  77   1                      U8 i;
+  78   1                
+  79   1             for(i=0;i<8;i++)    
+  80   1                  {
+  81   2                      
+  82   2                          U8FLAG=2;   
+*** ERROR C202 IN LINE 82 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+  83   2                      while((!P2_5)&&U8FLAG++);
+*** ERROR C202 IN LINE 83 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+  84   2                              Delay_10us();
+  85   2                          Delay_10us();
+  86   2                              Delay_10us();
+  87   2                              U8temp=0;
+*** ERROR C202 IN LINE 87 OF 51_DHT21.C: 'U8temp': undefined identifier
+  88   2                   if(P2_5)U8temp=1;
+*** ERROR C202 IN LINE 88 OF 51_DHT21.C: 'U8temp': undefined identifier
+  89   2                          U8FLAG=2;
+*** ERROR C202 IN LINE 89 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+  90   2                       while((P2_5)&&U8FLAG++);
+*** ERROR C202 IN LINE 90 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+  91   2                      //超时则跳出for循环               
+  92   2                       if(U8FLAG==1)break;
+*** ERROR C202 IN LINE 92 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+  93   2                      //判断数据位是0还是1     
+  94   2                         
+  95   2                      // 如果高电平高过预定0高电平值则数据位为 1 
+  96   2                       
+  97   2                         U8comdata<<=1;
+*** ERROR C202 IN LINE 97 OF 51_DHT21.C: 'U8comdata': undefined identifier
+  98   2                         U8comdata|=U8temp;        //0
+*** ERROR C202 IN LINE 98 OF 51_DHT21.C: 'U8comdata': undefined identifier
+  99   2                   }//rof
+C51 COMPILER V7.50   51_DHT21                                                              09/27/2017 16:54:09 PAGE 3   
+
+ 100   1                 
+ 101   1              }
+ 102          
+ 103                  //--------------------------------
+ 104                  //-----湿度读取子程序 ------------
+ 105                  //--------------------------------
+ 106                  //----以下变量均为全局变量--------
+ 107                  //----温度高8位== U8T_data_H------
+ 108                  //----温度低8位== U8T_data_L------
+ 109                  //----湿度高8位== U8RH_data_H-----
+ 110                  //----湿度低8位== U8RH_data_L-----
+ 111                  //----校验 8位 == U8checkdata-----
+ 112                  //----调用相关子程序如下----------
+ 113                  //---- Delay();, Delay_10us();,COM(); 
+ 114                  //--------------------------------
+ 115          
+ 116                  void RH(void)
+ 117                  {
+ 118   1                //主机拉低18ms 
+ 119   1             P2_5=0;
+ 120   1                 Delay180ms();
+ 121   1                 P2_5=1;
+ 122   1               //总线由上拉电阻拉高 主机延时20us
+ 123   1                 Delay_10us();
+ 124   1                 Delay_10us();
+ 125   1                 Delay_10us();
+ 126   1                 Delay_10us();
+ 127   1               //主机设为输入 判断从机响应信号 
+ 128   1                 P2_5=1;
+ 129   1               //判断从机是否有低电平响应信号 如不响应则跳出，响应则向下运行    
+ 130   1                 if(!P2_5)             //T !    
+ 131   1                 {
+ 132   2                 U8FLAG=2;
+*** ERROR C202 IN LINE 132 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+ 133   2               //判断从机是否发出 80us 的低电平响应信号是否结束        
+ 134   2                 while((!P2_5)&&U8FLAG++);
+*** ERROR C202 IN LINE 134 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+ 135   2                 U8FLAG=2;
+*** ERROR C202 IN LINE 135 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+ 136   2               //判断从机是否发出 80us 的高电平，如发出则进入数据接收状态
+ 137   2                 while((P2_5)&&U8FLAG++);
+*** ERROR C202 IN LINE 137 OF 51_DHT21.C: 'U8FLAG': undefined identifier
+ 138   2               //数据接收状态          
+ 139   2                 COM();
+ 140   2                 U8RH_data_H_temp=U8comdata;
+*** ERROR C202 IN LINE 140 OF 51_DHT21.C: 'U8RH_data_H_temp': undefined identifier
+ 141   2                 COM();
+ 142   2                 U8RH_data_L_temp=U8comdata;
+*** ERROR C202 IN LINE 142 OF 51_DHT21.C: 'U8RH_data_L_temp': undefined identifier
+ 143   2                 COM();
+ 144   2                 U8T_data_H_temp=U8comdata;
+*** ERROR C202 IN LINE 144 OF 51_DHT21.C: 'U8T_data_H_temp': undefined identifier
+ 145   2                 COM();
+ 146   2                 U8T_data_L_temp=U8comdata;
+*** ERROR C202 IN LINE 146 OF 51_DHT21.C: 'U8T_data_L_temp': undefined identifier
+ 147   2                 COM();
+ 148   2                 U8checkdata_temp=U8comdata;
+*** ERROR C202 IN LINE 148 OF 51_DHT21.C: 'U8checkdata_temp': undefined identifier
+ 149   2                 P2_5=1;
+ 150   2               //数据校验 
+ 151   2               
+ 152   2                 U8temp=(U8T_data_H_temp+U8T_data_L_temp+U8RH_data_H_temp+U8RH_data_L_temp);
+C51 COMPILER V7.50   51_DHT21                                                              09/27/2017 16:54:09 PAGE 4   
+
+*** ERROR C202 IN LINE 152 OF 51_DHT21.C: 'U8temp': undefined identifier
+ 153   2                 if(U8temp==U8checkdata_temp)
+*** ERROR C202 IN LINE 153 OF 51_DHT21.C: 'U8temp': undefined identifier
+ 154   2                 {
+ 155   3                        U8RH_data_H=U8RH_data_H_temp;
+*** ERROR C202 IN LINE 155 OF 51_DHT21.C: 'U8RH_data_H': undefined identifier
+ 156   3                        U8RH_data_L=U8RH_data_L_temp;
+*** ERROR C202 IN LINE 156 OF 51_DHT21.C: 'U8RH_data_L': undefined identifier
+ 157   3                        U8T_data_H=U8T_data_H_temp;
+*** ERROR C202 IN LINE 157 OF 51_DHT21.C: 'U8T_data_H': undefined identifier
+ 158   3                        U8T_data_L=U8T_data_L_temp;
+*** ERROR C202 IN LINE 158 OF 51_DHT21.C: 'U8T_data_L': undefined identifier
+ 159   3                        U8checkdata=U8checkdata_temp;
+*** ERROR C202 IN LINE 159 OF 51_DHT21.C: 'U8checkdata': undefined identifier
+ 160   3                 }
+ 161   2                 }
+ 162   1      
+ 163   1              }
+ 164          /*
+ 165          void Uart0_Init()
+ 166          {
+ 167              RCAP2L=0xD9;//9600波特率对应 FFD9，低位为D9
+ 168              RCAP2H=0xFF;//高位为FF
+ 169              T2CON=0x34;//RCLK、TCLK、TR2置1
+ 170              SCON=0x50;//串口工作模式1，接收使能
+ 171              ES=1;//打开接收中断
+ 172              EA=1;//打开总中断
+ 173          }
+ 174          */      
+ 175          //----------------------------------------------
+ 176          //main()功能描述:  AT89C51  11.0592MHz  串口发 
+ 177          //送温湿度数据,波特率 9600 
+ 178          //----------------------------------------------
+ 179          /*void main()
+ 180          {
+ 181                  U8  i,j;
+ 182                  
+ 183                  //uchar str[6]={"RS232"};
+ 184          
+ 185                  Uart0_Init();
+ 186                  SendData(str) ;   //发送到串口 
+ 187                  Delay(1);         //延时100US（12M晶振)
+ 188                  while(1)
+ 189                  {  
+ 190          
+ 191                     //------------------------
+ 192                     //调用温湿度读取子程序 
+ 193                     RH();
+ 194                     //串口显示程序 
+ 195                     //--------------------------
+ 196          
+ 197                     str[0]=U8RH_data_H;
+ 198                     str[1]=U8RH_data_L;
+ 199                     str[2]=U8T_data_H;
+ 200                     str[3]=U8T_data_L;
+ 201                     str[4]=U8checkdata;
+ 202          
+ 203                     SendData(str) ;  //发送到串口  
+ 204          
+ 205                     //读取模块数据周期不易小于 2S 
+ 206                     Delay(20000);
+ 207                  }//elihw
+C51 COMPILER V7.50   51_DHT21                                                              09/27/2017 16:54:09 PAGE 5   
+
+ 208                  
+ 209          }// main
+ 210          */
+ 211          void DA_TH()
+ 212          {
+ 213   1                 RH();
+ 214   1                 str[0]=U8RH_data_H;
+*** ERROR C202 IN LINE 214 OF 51_DHT21.C: 'str': undefined identifier
+ 215   1                 str[1]=U8RH_data_L;
+*** ERROR C202 IN LINE 215 OF 51_DHT21.C: 'str': undefined identifier
+ 216   1                 str[2]=U8T_data_H;
+*** ERROR C202 IN LINE 216 OF 51_DHT21.C: 'str': undefined identifier
+ 217   1                 str[3]=U8T_data_L;
+*** ERROR C202 IN LINE 217 OF 51_DHT21.C: 'str': undefined identifier
+ 218   1                 str[4]=U8checkdata;
+*** ERROR C202 IN LINE 218 OF 51_DHT21.C: 'str': undefined identifier
+ 219   1      }
+ 220          
+ 221          
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  37 ERROR(S)

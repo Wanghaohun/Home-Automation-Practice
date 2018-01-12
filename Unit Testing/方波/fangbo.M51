@@ -1,0 +1,150 @@
+BL51 BANKED LINKER/LOCATER V5.12                                                        11/27/2017  11:13:58  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.12, INVOKED BY:
+E:\KEIL\C51\BIN\BL51.EXE first.obj TO fangbo RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  first.obj (FIRST)
+  E:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  fangbo (FIRST)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?FIRST
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0054H     UNIT         ?PR?TIMER0?FIRST
+            CODE    0062H     001EH     UNIT         ?PR?INIT?FIRST
+            CODE    0080H     0018H     UNIT         ?PR?MAIN?FIRST
+            CODE    0098H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   fangbo (FIRST)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?FIRST
+
+?PR?MAIN?FIRST
+  +--> ?PR?INIT?FIRST
+
+
+
+SYMBOL TABLE OF MODULE:  fangbo (FIRST)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        FIRST
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V5.12                                                      11/27/2017  11:13:58  PAGE 2
+
+
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:0090H.0       PUBLIC        Sign
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  D:0008H         PUBLIC        culer
+  C:0080H         PUBLIC        main
+  D:000AH         PUBLIC        count
+  B:00A0H.3       PUBLIC        SignFromMain
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0062H         PUBLIC        init
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  D:000CH         PUBLIC        tmp
+  C:000EH         PUBLIC        timer0
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INIT
+  C:0062H         LINE#         10
+  C:0062H         LINE#         11
+  C:0062H         LINE#         13
+  C:0065H         LINE#         14
+  C:0068H         LINE#         15
+  C:006BH         LINE#         16
+  C:006EH         LINE#         17
+  C:0071H         LINE#         18
+  C:0073H         LINE#         19
+  C:0075H         LINE#         20
+  C:0077H         LINE#         21
+  C:0079H         LINE#         22
+  C:007BH         LINE#         23
+  C:007DH         LINE#         24
+  C:007FH         LINE#         26
+  -------         ENDPROC       INIT
+  -------         PROC          MAIN
+  C:0080H         LINE#         28
+  C:0080H         LINE#         29
+  C:0080H         LINE#         30
+  C:0080H         LINE#         31
+  C:0085H         LINE#         32
+  C:008AH         LINE#         33
+  C:008DH         LINE#         34
+  C:008DH         LINE#         35
+  C:008DH         LINE#         36
+  C:0090H         LINE#         37
+  C:0090H         LINE#         38
+  C:0092H         LINE#         39
+BL51 BANKED LINKER/LOCATER V5.12                                                      11/27/2017  11:13:58  PAGE 3
+
+
+  C:0094H         LINE#         41
+  C:0094H         LINE#         42
+  C:0096H         LINE#         43
+  C:0096H         LINE#         44
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER0
+  C:000EH         LINE#         46
+  C:0019H         LINE#         48
+  C:001CH         LINE#         49
+  C:001FH         LINE#         50
+  C:0027H         LINE#         51
+  C:003CH         LINE#         52
+  C:003CH         LINE#         53
+  C:003EH         LINE#         54
+  C:0044H         LINE#         55
+  C:0044H         LINE#         56
+  C:0051H         LINE#         57
+  C:0051H         LINE#         58
+  C:0053H         LINE#         59
+  C:0059H         LINE#         60
+  C:0059H         LINE#         61
+  -------         ENDPROC       TIMER0
+  -------         ENDMOD        FIRST
+
+Program Size: data=15.0 xdata=0 code=156
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

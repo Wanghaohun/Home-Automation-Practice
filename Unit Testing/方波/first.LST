@@ -1,0 +1,88 @@
+C51 COMPILER V7.50   FIRST                                                                 11/27/2017 11:13:58 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE FIRST
+OBJECT MODULE PLACED IN first.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE first.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*定时器产生方波*/
+   2          #include <reg52.h>
+   3          #define uchar unsigned char
+   4          #define uint  unsigned int
+   5          sbit Sign = P1^0;
+   6          sbit SignFromMain = P2^3;
+   7          uint count;
+   8          uint culer;
+   9          uint tmp;
+  10          void init()
+  11          {
+  12   1              
+  13   1              TMOD = 0x21;  //定时器16为计数工作模式
+  14   1              TH0 = 0xff;
+  15   1              TL0 = 0xa3; //0.1ms
+  16   1              TH1 = 0xfd;
+  17   1              TL1 = 0xfd;     //比特率9600
+  18   1              TR1 = 1;                //启动T1定时器
+  19   1              SM0 = 0;
+  20   1              SM1 = 1;                //串口工作方式1 10位异步
+  21   1              REN = 1;                //串口允许接收
+  22   1              ES  = 1;                //串口中断打开
+  23   1              ET0 = 1; //开定时器0中断
+  24   1              TR0 = 1;//启动定时器0
+  25   1      
+  26   1      }
+  27          
+  28                  void main()
+  29                  {
+  30   1               SignFromMain==0;//舵机信号位初始化为0
+*** WARNING C275 IN LINE 30 OF FIRST.C: expression with possibly no effect
+  31   1               count = 0; //方波参数
+  32   1               culer =11;//方波参数
+  33   1               init(); //定时器初始化
+  34   1               while(1)
+  35   1              {       
+  36   2              if(SignFromMain==1)
+  37   2              {
+  38   3              EA = 1; //开总中断
+  39   3              }
+  40   2              else
+  41   2              {
+  42   3              EA = 0;//关总中断
+  43   3              }
+  44   2              }
+  45   1              }
+  46          void timer0() interrupt 1  //定时器中断
+  47          {
+  48   1              TH0 =0xff;  //设定初值
+  49   1              TL0 =0xa3; //0.1ms
+  50   1              count++;
+  51   1              if (count == (180-culer) && Sign == 0)
+  52   1              {
+  53   2                      Sign = 1;
+  54   2                      count = 0;      
+C51 COMPILER V7.50   FIRST                                                                 11/27/2017 11:13:58 PAGE 2   
+
+  55   2              }
+  56   1              if (count == culer && Sign == 1)
+  57   1              {
+  58   2                      Sign = 0;
+  59   2                      count = 0;      
+  60   2              }
+  61   1      }
+  62          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    138    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

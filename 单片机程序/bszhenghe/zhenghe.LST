@@ -1,0 +1,285 @@
+C51 COMPILER V7.50   ZHENGHE                                                               11/26/2017 18:06:50 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE ZHENGHE
+OBJECT MODULE PLACED IN zhenghe.OBJ
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE zhenghe.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include <I2C.h>
+   4          #include <SPI.h>
+   5          #include <DA-AD.h>
+   6          
+   7          typedef unsigned char  U8;      /* defined for unsigned 8-bits integer variable           无符号8位整型变量  */
+   8          typedef signed   char  S8;       /* defined for signed 8-bits integer variable            有符号8位整型变量  */
+   9          typedef unsigned int   U16;      /* defined for unsigned 16-bits integer variable         无符号16位整型变量 */
+  10          typedef signed   int   S16;      /* defined for signed 16-bits integer variable           有符号16位整型变量 */
+  11          typedef unsigned long  U32;      /* defined for unsigned 32-bits integer variable         无符号32位整型变量 */
+  12          typedef signed   long  S32;      /* defined for signed 32-bits integer variable           有符号32位整型变量 */
+  13          typedef float          F32;      /* single precision floating point variable (32bits) 单精度浮点数（32位长
+             -度） */
+  14          typedef double         F64;      /* double precision floating point variable (64bits) 双精度浮点数（64位长
+             -度） */
+  15          
+  16          #define   Data_0_time    4
+  17          #define RX_DR  (sta & 0x40)  // 接收成功中断标志
+  18          #define TX_DS  (sta & 0x20)  // 发射成功中断标志
+  19          #define MAX_RT (sta & 0x10)  // 重发溢出中断标志
+  20          sbit duo = P2^3;
+  21          sbit CE =  P1^2;
+  22          sbit CSN=  P1^3;
+  23          sbit SCK=  P1^7;
+  24          sbit MOSI= P1^5;
+  25          sbit MISO= P1^6;
+  26          sbit IRQ = P1^4;
+  27          sbit P2_5  = P2^5;
+  28          sbit     SCL=P2^0;       //I2C  时钟 
+  29          sbit     SDA=P2^1;       //I2C  数据 
+  30          sbit set = P0^3;
+  31          sbit reset = P0^4;
+  32          U8  acount;
+  33          U8  idata rec[20];
+  34          U8  idata U8FLAG,k;
+  35          U8  idata U8count,U8temp;
+  36          U8  idata U8T_data_H,U8T_data_L,U8RH_data_H,U8RH_data_L,U8checkdata;
+  37          U8  idata U8T_data_H_temp,U8T_data_L_temp,U8RH_data_H_temp,U8RH_data_L_temp,U8checkdata_temp;
+  38          U8  idata U8comdata;
+  39          U8  idata outdata[5];  //定义发送的字节数          
+  40          U8  idata indata[5];
+  41          U8  idata count, count_r=0;
+  42          U8  idata str[8]={16,10,15,23,62};
+  43          U16 idata U16temp1,U16temp2;
+  44          U16 idata DataLight;
+  45          U8 idata rx_buf[10];
+  46          
+  47          SendData(U8 *a)
+  48          {
+  49   1              outdata[0] = a[0]; 
+  50   1              outdata[1] = a[1];
+  51   1              outdata[2] = a[2];
+  52   1              outdata[3] = a[3];
+  53   1              outdata[4] = a[4];
+C51 COMPILER V7.50   ZHENGHE                                                               11/26/2017 18:06:50 PAGE 2   
+
+  54   1              count = 1;
+  55   1              SBUF=outdata[0];
+  56   1      }
+  57          /*nRF24L01初始化*/
+  58          
+  59           void UART_init()
+  60          {
+  61   1      
+  62   1          RCAP2L=0xD9;//9600波特率对应 FFD9，低位为D9
+  63   1          RCAP2H=0xFF;//高位为FF
+  64   1          T2CON=0x34;//RCLK、TCLK、TR2置1
+  65   1          SCON=0x50;//串口工作模式1，接收使能
+  66   1              EA  = 1;                //开总中断
+  67   1              ES  = 1;                //串口中断打开
+  68   1      
+  69   1      }
+  70                 void Delay180ms()
+  71              {      U8 i;
+  72   1                              U16 j=190;
+  73   1                  for(;j>0;j--)
+  74   1                {     
+  75   2                      for(i=0;i<27;i++);
+  76   2      
+  77   2                }
+  78   1          }
+  79                 void  Delay_10us(void)
+  80                {
+  81   1              U8 i;
+  82   1              i--;
+  83   1              i--;
+  84   1              i--;
+  85   1              i--;
+  86   1              i--;
+  87   1              i--;
+  88   1             }
+  89                  
+  90                  void  COM(void)
+  91                {
+  92   1           
+  93   1                      U8 i;
+  94   1                
+  95   1             for(i=0;i<8;i++)    
+  96   1                  {
+  97   2                      
+  98   2                          U8FLAG=2;   
+  99   2                      while((!P2_5)&&U8FLAG++);
+ 100   2                              Delay_10us();
+ 101   2                          Delay_10us();
+ 102   2                              Delay_10us();
+ 103   2                              U8temp=0;
+ 104   2                   if(P2_5)U8temp=1;
+ 105   2                          U8FLAG=2;
+ 106   2                       while((P2_5)&&U8FLAG++);
+ 107   2                      //超时则跳出for循环               
+ 108   2                       if(U8FLAG==1)break;
+ 109   2                      //判断数据位是0还是1     
+ 110   2                         
+ 111   2                      // 如果高电平高过预定0高电平值则数据位为 1 
+ 112   2                       
+ 113   2                         U8comdata<<=1;
+ 114   2                         U8comdata|=U8temp;        //0
+ 115   2                   }//rof
+C51 COMPILER V7.50   ZHENGHE                                                               11/26/2017 18:06:50 PAGE 3   
+
+ 116   1                 
+ 117   1              }
+ 118          
+ 119                  //--------------------------------
+ 120                  //-----湿度读取子程序 ------------
+ 121                  //--------------------------------
+ 122                  //----以下变量均为全局变量--------
+ 123                  //----温度高8位== U8T_data_H------
+ 124                  //----温度低8位== U8T_data_L------
+ 125                  //----湿度高8位== U8RH_data_H-----
+ 126                  //----湿度低8位== U8RH_data_L-----
+ 127                  //----校验 8位 == U8checkdata-----
+ 128                  //----调用相关子程序如下----------
+ 129                  //---- Delay();, Delay_10us();,COM(); 
+ 130                  //--------------------------------
+ 131          
+ 132                  void RH(void)
+ 133                  {
+ 134   1                //主机拉低18ms 
+ 135   1             P2_5=0;
+ 136   1                 Delay180ms();
+ 137   1                 P2_5=1;
+ 138   1               //总线由上拉电阻拉高 主机延时20us
+ 139   1                 Delay_10us();
+ 140   1                 Delay_10us();
+ 141   1                 Delay_10us();
+ 142   1                 Delay_10us();
+ 143   1               //主机设为输入 判断从机响应信号 
+ 144   1                 P2_5=1;
+ 145   1               //判断从机是否有低电平响应信号 如不响应则跳出，响应则向下运行    
+ 146   1                 if(!P2_5)             //T !    
+ 147   1                 {
+ 148   2                 U8FLAG=2;
+ 149   2               //判断从机是否发出 80us 的低电平响应信号是否结束        
+ 150   2                 while((!P2_5)&&U8FLAG++);
+ 151   2                 U8FLAG=2;
+ 152   2               //判断从机是否发出 80us 的高电平，如发出则进入数据接收状态
+ 153   2                 while((P2_5)&&U8FLAG++);
+ 154   2               //数据接收状态          
+ 155   2                 COM();
+ 156   2                 U8RH_data_H_temp=U8comdata;
+ 157   2                 COM();
+ 158   2                 U8RH_data_L_temp=U8comdata;
+ 159   2                 COM();
+ 160   2                 U8T_data_H_temp=U8comdata;
+ 161   2                 COM();
+ 162   2                 U8T_data_L_temp=U8comdata;
+ 163   2                 COM();
+ 164   2                 U8checkdata_temp=U8comdata;
+ 165   2                 P2_5=1;
+ 166   2               //数据校验 
+ 167   2               
+ 168   2                 U8temp=(U8T_data_H_temp+U8T_data_L_temp+U8RH_data_H_temp+U8RH_data_L_temp);
+ 169   2                 if(U8temp==U8checkdata_temp)
+ 170   2                 {
+ 171   3                        U8RH_data_H=U8RH_data_H_temp;
+ 172   3                        U8RH_data_L=U8RH_data_L_temp;
+ 173   3                        U8T_data_H=U8T_data_H_temp;
+ 174   3                        U8T_data_L=U8T_data_L_temp;
+ 175   3                        U8checkdata=U8checkdata_temp;
+ 176   3                 }
+ 177   2                 }
+C51 COMPILER V7.50   ZHENGHE                                                               11/26/2017 18:06:50 PAGE 4   
+
+ 178   1      
+ 179   1              }
+ 180          void DA_TH()
+ 181          {
+ 182   1                 RH();
+ 183   1                 str[0]=U8RH_data_H;
+ 184   1                 str[1]=U8RH_data_L;
+ 185   1                 str[2]=U8T_data_H;
+ 186   1                 str[3]=U8T_data_L;
+ 187   1                 str[4]=U8checkdata;
+ 188   1      }
+ 189          void main()
+ 190          {           
+ 191   1              U8 i;
+ 192   1              U8 buf0[5]={0,0,0,0,0};
+ 193   1          P0=0xff;//初始化IO口
+ 194   1          P1=0xff;
+ 195   1          P2=0xff;
+ 196   1          P3=0xff;
+ 197   1              set=1;
+ 198   1              reset=1;
+ 199   1          _delay_us(100);
+ 200   1          nRF24L01_Init();//NRF24L01初始化
+ 201   1              UART_init();
+ 202   1              duo=0;
+ 203   1          while(1)
+ 204   1          {                   
+ 205   2                      DataLight=DA_L();
+ 206   2                              str[5]=DataLight;       
+ 207   2                              str[7]=99;
+ 208   2                              DA_TH();
+ 209   2                  for(i=0;i<7;i++)//发送8次数据
+ 210   2                  {
+ 211   3                  nRF24L01_Set_TX_Mode(&str[i]);//发送数据
+ 212   3                  while(Check_Ack());//等待发送完成
+ 213   3                  }
+ 214   2          for(i=0;i<50;i++)   
+ 215   2      {       
+ 216   3              setRX_Mode();
+ 217   3              if(Check_Rec())
+ 218   3                      {
+ 219   4              if (RX_Buffer[0] == RX_Buffer[4])
+ 220   4          {
+ 221   5            //测试成功
+ 222   5                      duo=1;
+ 223   5            
+ 224   5          }
+ 225   4              if (RX_Buffer[3] == RX_Buffer[4])
+ 226   4          {
+ 227   5            //测试成功
+ 228   5                      duo=0;
+ 229   5            
+ 230   5          }
+ 231   4                      }
+ 232   3              }
+ 233   2          }
+ 234   1      }
+ 235          void jieshou(void) interrupt 4
+ 236          {
+ 237   1             if(RI==1)           //检测是否有数据接收
+ 238   1          {   
+ 239   2         rec[acount] = SBUF;   //接收数据
+C51 COMPILER V7.50   ZHENGHE                                                               11/26/2017 18:06:50 PAGE 5   
+
+ 240   2         SBUF = rec[acount];  
+ 241   2         while(!TI);
+ 242   2         TI = 0;
+ 243   2         acount++; 
+ 244   2         RI = 0;   //清除标志位
+ 245   2         if(acount==8)        acount=0;       
+ 246   2         if(rec[0]==0x42&&rec[1]==0x4d)
+ 247   2              {
+ 248   3              str[6]=rec[7];
+ 249   3              }
+ 250   2      
+ 251   2          }
+ 252   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    555    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       7
+   IDATA SIZE       =     71    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

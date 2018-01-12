@@ -1,0 +1,23 @@
+<html>
+<body>
+<pre>
+<h1>礦ision2 Build Log</h1>
+<h2>Project:</h2>
+F:\学习视频\51danpianji\我的编程\方波\fangbo.uv2
+Project File Date:  07/02/2017
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling first.c...
+FIRST.C(30): warning C275: expression with possibly no effect
+linking...
+Program Size: data=15.0 xdata=0 code=156
+creating hex file from "fangbo"...
+"fangbo" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling first.c...
+FIRST.C(30): warning C275: expression with possibly no effect
+linking...
+Program Size: data=15.0 xdata=0 code=156
+creating hex file from "fangbo"...
+"fangbo" - 0 Error(s), 1 Warning(s).
