@@ -21,5 +21,5 @@ HomePage(Bootstrap template)
 Login(easy cookie authentication and basic authentication)
 ![Image can't find](https://raw.githubusercontent.com/Wanghaohun/img/master/Home-automation%20img/loginpage.jpg)
 
-Record the value of sensor
+Record the value of sensors
 ![Image can't find](https://raw.githubusercontent.com/Wanghaohun/img/master/Home-automation%20img/record.jpg)
