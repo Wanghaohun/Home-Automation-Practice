@@ -41,7 +41,7 @@ class StringGenerator(object):
             cookie2['cookieName']['version'] = 1            
             return open('userinterface.html')
         else:
-            db = pymysql.connect("localhost","root","whx41523163","pyweb" )
+            db = pymysql.connect("localhost","root","*******","pyweb" )
             cursor = db.cursor()
             cursor.execute("SELECT cookie from users where id='%s'"%id)
             sqldata = cursor.fetchone()
@@ -95,7 +95,7 @@ class InterfaceVerification(object):
 
     def POST(self,username,password,captcha):
         if operator.eq(captcha.lower(),self.CAPTCHA.lower()):
-            db = pymysql.connect("localhost","root","whx41523163","pyweb" )
+            db = pymysql.connect("localhost","root","********","pyweb" )
             cursor = db.cursor()
             cursor.execute("SELECT * from users where username='%s'"%username)
             sqldata = cursor.fetchone()
